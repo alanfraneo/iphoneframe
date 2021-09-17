@@ -26,19 +26,18 @@ def frame_image(file):
     outpath = getcwd()+'/framed/'
     if not exists(outpath):
         makedirs(outpath)
-    newImage.save(outpath+image.filename,"PNG")
+    newImage.save(outpath+image.filename.split(".")[0]+".png","PNG")
     print("framed: ", image.filename)
 
-
-start = time.time()
-print("started framing images in", getcwd())
-onlyfiles = [f for f in listdir(getcwd()) if isfile(join(getcwd(), f))]
-
-pool = Pool(15)
-pool.map(frame_image, onlyfiles)
-pool.terminate()
-end = time.time()
-print("All images framed successfully")
-print("Total time taken to process images:", int(end-start), "seconds")
+if __name__ == '__main__':
+    start = time.time()
+    print("started framing images in", getcwd())
+    onlyfiles = [f for f in listdir(getcwd()) if isfile(join(getcwd(), f))]
+    pool = Pool(10)
+    pool.map(frame_image, onlyfiles)
+    pool.terminate()
+    end = time.time()
+    print("All images framed successfully")
+    print("Total time taken to process images:", int(end-start), "seconds")
 
 
